@@ -33,7 +33,7 @@ app.post(
       .notEmpty()
       .withMessage("Date is required")
       .isISO8601()
-      .withMessage("Invalid date format"),
+      .withMessage("Invalid date format!"),
   ],
   (req, res) => {
     const errors = validationResult(req);
@@ -41,17 +41,38 @@ app.post(
       return res.status(400).json({
         data: null,
         error: errors,
-        message: "Validation error",
+        message: "Validation error!",
       });
     }
     const newExpense = req.body;
     expenses.push({ id: expenses.length, ...req.body });
     res.status(201).json({
       data: expenses,
-      message: "Expense added successfully!",
+      message: "Expense added successfully.",
     });
   }
 );
+
+app.delete("/deleteExpense/:id", (req, res) => {
+  const expenseId = Number(req.params.id);
+  console.log(expenseId);
+  const expense = expenses.find((expense) => expense.id === expenseId);
+  console.log(expenses);
+
+  if (!expense) {
+    return res.status(404).json({
+      data: null,
+      message: "Expense not found",
+    });
+  }
+  deleteExpenseIndex = expenses.indexOf(expense);
+  expenses.splice(deleteExpenseIndex, 1);
+
+  res.status(200).json({
+    data: expenses,
+    message: "Expense deleted successfully!",
+  });
+});
 
 app.listen(3030, () => {
   console.log("Listening on port 3030");
