@@ -1,8 +1,8 @@
 [
   {
     "id": 0,
-    "title": "Toilet Paper",
-    "amount": 94.12,
+    "title": "Laptop",
+    "amount": 500,
     "date": "2020-7-14"
   },
   {
@@ -21,6 +21,12 @@
     "id": 3,
     "title": "New Desk (Wooden)",
     "amount": 450,
-    "date": "2021-5-12"
+    "date": "2022-5-12"
+  },
+  {
+    "id": 4,
+    "title": "House Insurance",
+    "amount": 300,
+    "date": "2023-5-12"
   }
 ]
