@@ -7,8 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-console.log(expenses);
-
 app.get("/", (req, res) => {
   res.json({
     data: expenses,
@@ -47,7 +45,6 @@ app.post(
     const newExpense = req.body;
     expenses.push({ id: expenses.length, ...req.body });
     res.status(201).json({
-      data: expenses,
       message: "Expense added successfully.",
     });
   }
@@ -121,7 +118,6 @@ app.delete("/deleteExpense/:id", (req, res) => {
   expenses.splice(deleteExpenseIndex, 1);
 
   res.status(200).json({
-    data: expenses,
     message: "Expense deleted successfully!",
   });
 });
