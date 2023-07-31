@@ -9,7 +9,9 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(
+    "mongodb+srv://expense_tracker:expense_tracker123@cluster0.fdzouvg.mongodb.net/expense_tracker?retryWrites=true&w=majority"
+  )
   .then(() => console.log("Connected to mongoDB"))
   .catch(() => console.log("Could not connect to mongoDB"));
 
@@ -57,6 +59,7 @@ app.post(
         message: "Validation error!",
       });
     }
+
     let newExpense = new Expense({
       title: req.body.title,
       amount: req.body.amount,
