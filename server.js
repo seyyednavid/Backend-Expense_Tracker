@@ -16,7 +16,7 @@ mongoose
 const expenseSchema = mongoose.Schema({
   title: { type: String, required: true },
   amount: { type: Number, required: true },
-  date: { type: String, required: true },
+  date: { type: Date, required: true },
 });
 
 const Expense = mongoose.model("Expense", expenseSchema);
@@ -63,7 +63,8 @@ app.post(
       date: req.body.date,
     });
     newExpense.save();
-    res.status(201).json({
+    newExpense = res.status(201).json({
+      data: newExpense,
       message: "Expense added successfully.",
     });
   }
