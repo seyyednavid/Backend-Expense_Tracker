@@ -3,30 +3,30 @@
     "id": 0,
     "title": "Laptop",
     "amount": 500,
-    "date": "2020-7-14"
+    "date": "2020-07-14"
   },
   {
     "id": 1,
     "title": "New TV",
     "amount": 799.49,
-    "date": "2021-2-12"
+    "date": "2021-02-12"
   },
   {
     "id": 2,
     "title": "Car Insurance",
     "amount": 294.67,
-    "date": "2021-2-28"
+    "date": "2021-02-28"
   },
   {
     "id": 3,
     "title": "New Desk (Wooden)",
     "amount": 450,
-    "date": "2022-5-12"
+    "date": "2022-05-12"
   },
   {
     "id": 4,
     "title": "House Insurance",
     "amount": 300,
-    "date": "2023-5-12"
+    "date": "2023-05-12"
   }
 ]

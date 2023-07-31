@@ -1,13 +1,28 @@
 const express = require("express");
 const { body, validationResult } = require("express-validator");
 const cors = require("cors");
-let expenses = require("./Expense.json");
+const mongoose = require("mongoose");
+// let expenses = require("./Expense.json");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
+mongoose
+  .connect("mongodb://localhost:27017/track-expenses")
+  .then(() => console.log("Connected to mongoDB"))
+  .catch(() => console.log("Could not connect to mongoDB"));
+
+const expenseSchema = mongoose.Schema({
+  title: { type: String, required: true },
+  amount: { type: Number, required: true },
+  date: { type: String, required: true },
+});
+
+const Expense = mongoose.model("Expense", expenseSchema);
+
+app.get("/", async (req, res) => {
+  const expenses = await Expense.find();
   res.json({
     data: expenses,
     message: "ok",
@@ -42,8 +57,12 @@ app.post(
         message: "Validation error!",
       });
     }
-    const newExpense = req.body;
-    expenses.push({ id: expenses.length, ...req.body });
+    let newExpense = new Expense({
+      title: req.body.title,
+      amount: req.body.amount,
+      date: req.body.date,
+    });
+    newExpense.save();
     res.status(201).json({
       message: "Expense added successfully.",
     });
@@ -69,7 +88,7 @@ app.put(
       .isISO8601()
       .withMessage("Invalid date format!"),
   ],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -79,44 +98,35 @@ app.put(
       });
     }
 
-    const expenseId = Number(req.params.id);
-    const expenseToUpdate = expenses.find(
-      (expense) => expense.id === expenseId
+    const expense = await Expense.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        amount: req.body.amount,
+        date: req.body.date,
+      },
+      { new: true }
     );
-
-    if (!expenseToUpdate) {
+    if (!expense) {
       return res.status(404).json({
         data: null,
         message: "Expense not found",
       });
     }
-
-    expenses = expenses.map((expense) => {
-      if (expense.id === expenseId) {
-        return { ...expense, ...req.body };
-      }
-      return expense;
-    });
-
     res.status(200).json({
-      data: expenses,
       message: "Expense updated successfully!",
     });
   }
 );
 
-app.delete("/deleteExpense/:id", (req, res) => {
-  const expenseId = Number(req.params.id);
-  const expense = expenses.find((expense) => expense.id === expenseId);
+app.delete("/deleteExpense/:id", async (req, res) => {
+  const expense = await Expense.findByIdAndRemove(req.params.id);
   if (!expense) {
     return res.status(404).json({
       data: null,
       message: "Expense not found",
     });
   }
-  deleteExpenseIndex = expenses.indexOf(expense);
-  expenses.splice(deleteExpenseIndex, 1);
-
   res.status(200).json({
     message: "Expense deleted successfully!",
   });
