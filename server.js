@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect("mongodb://localhost:27017/track-expenses")
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("Connected to mongoDB"))
   .catch(() => console.log("Could not connect to mongoDB"));
 
