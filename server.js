@@ -2,16 +2,19 @@ const express = require("express");
 const { body, validationResult } = require("express-validator");
 const cors = require("cors");
 const mongoose = require("mongoose");
-// let expenses = require("./Expense.json");
+let expenses = require("./Expense.json");
+require("dotenv").config();
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
+
 mongoose
-  .connect(
-    "mongodb+srv://expense_tracker:expense_tracker123@cluster0.fdzouvg.mongodb.net/expense_tracker?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_URL,, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => console.log("Connected to mongoDB"))
   .catch(() => console.log("Could not connect to mongoDB"));
 
