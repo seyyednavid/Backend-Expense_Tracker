@@ -24,5 +24,5 @@ Database: MongoDB serves as the database for storing and managing expense data.
 https://github.com/seyyednavid/Expense_Tracker_Backend/assets/100324062/f3c5621b-dd55-4949-8483-fbca77f5d76c
 
 # Additionally:
-GitHub Address for frontend : [Link to server](https://github.com/seyyednavid/Expense_Tracker_Frontend)
+Frontend GitHub Repository : [Link to frontend](https://github.com/seyyednavid/Expense_Tracker_Frontend)
 
