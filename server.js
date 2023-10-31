@@ -2,19 +2,18 @@ const express = require("express");
 const { body, validationResult } = require("express-validator");
 const cors = require("cors");
 const mongoose = require("mongoose");
-let expenses = require("./Expense.json");
 require("dotenv").config();
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-
+let expenses = [];
 
 mongoose
   .connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to mongoDB"))
   .catch(() => console.log("Could not connect to mongoDB"));
 
